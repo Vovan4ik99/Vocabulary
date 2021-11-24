@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{parts/header.html :: header}"></head>
+<body>
+<nav th:insert="parts/navbar.html :: navbar"></nav>
+<div class="container mt-5">
+    <div th:replace="~{parts/wordEdit.html :: wordEdit(isUpdateForm = 'false')}"></div>
+    <table class="table mt-3">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Transcription</th>
+            <th scope="col">Translation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="word: ${words}">
+            <th th:text="${word.getId()}" scope="row">1</th>
+            <td th:text="${word.getName()}"></td>
+            <td th:text="${word.getTranscription()}"></td>
+            <td th:text="${word.getTranslation()}"></td>
+            <td>
+                <div th:replace="~{parts/wordEdit.html :: wordEdit(isUpdateForm = 'true')}"></div>
+            </td>
+            <td>
+                <a th:href="@{'/delete/' + ${word.getId()}}" class="btn btn-danger">Delete word!</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:insert="~{parts/footer.html :: footer}"></div>
+</body>
+</html>

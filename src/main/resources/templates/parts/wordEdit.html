@@ -1,0 +1,29 @@
+<div th:fragment="wordEdit">
+  <a class="btn btn-primary" th:text="${isUpdateForm} ? 'Change word' : 'Add new word'" data-bs-toggle="collapse"
+     th:href="${isUpdateForm} ? '#collapseExample' + ${word.getId()} : '#collapseExample'" role="button" aria-expanded="false" aria-controls="collapseExample"></a>
+  <div class="mb-3 mt-3 collapse" th:id="${isUpdateForm} ? 'collapseExample' + ${word.getId()} : 'collapseExample'">
+    <form method="post" th:action="@{/}" th:object="${word}">
+      <div class="text-warning mb-3" th:text="${wordExistsError}"></div>
+      <div class="input-group mb-3">
+        <input class="form-control" th:classappend="${nameError} ? is-invalid : ''" name="name"
+               placeholder="Write your word" th:value="${word} ? ${word.name} : ''">
+        <div th:text="${nameError}" class="invalid-feedback"></div>
+      </div>
+      <div class="input-group mb-3">
+        <input class="form-control" th:classappend="${translationError} ? is-invalid : ''" name="translation"
+               placeholder="Translation"  th:value="${word} ? ${word.translation} : ''">
+        <div th:text="${translationError}" class="invalid-feedback"></div>
+      </div>
+      <div class="input-group mb-3">
+        <input class="form-control" name="transcription"
+               placeholder="Transcription (not required)"  th:value="${word} ? ${word.transcription} : ''">
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" name="isVerb" th:checked="${word} ? ${word.getIsVerb()} : ''" id="verbCheck">
+        <label class="form-check-label" for="verbCheck">Verb</label>
+      </div>
+      <input type="hidden" name="id" th:value="${word} ? ${word.id} : null"/>
+      <button class="btn btn-success" type="submit">Add word</button>
+    </form>
+  </div>
+</div>
